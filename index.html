@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>THẢO DƯỢC LA VLOG</title>
+
+<style>
+
+body{
+margin:0;
+font-family:Arial;
+background:url("https://images.unsplash.com/photo-1501004318641-b39e6451bec6") center/cover fixed;
+}
+
+header{
+background:#2e7d32;
+color:white;
+padding:15px;
+display:flex;
+justify-content:space-between;
+}
+
+nav a{
+color:white;
+margin:10px;
+cursor:pointer;
+}
+
+.container{
+background:rgba(255,255,255,0.9);
+margin:15px;
+padding:20px;
+border-radius:10px;
+}
+
+.products{
+display:flex;
+gap:15px;
+flex-wrap:wrap;
+}
+
+.product{
+background:white;
+padding:10px;
+width:220px;
+border-radius:8px;
+}
+
+button{
+background:#2e7d32;
+color:white;
+padding:8px;
+border:none;
+cursor:pointer;
+}
+
+.cart{
+position:fixed;
+right:-350px;
+top:0;
+width:320px;
+height:100%;
+background:white;
+padding:20px;
+transition:0.4s;
+overflow:auto;
+}
+
+.cart.open{right:0}
+
+input,textarea{
+width:100%;
+margin-top:8px;
+padding:10px;
+}
+
+</style>
+</head>
+
+<body>
+
+<header>
+
+<h2>🌿 THẢO DƯỢC LA VLOG</h2>
+
+<nav>
+
+<a onclick="show('home')">Trang chủ</a>
+<a onclick="show('products')">Sản phẩm</a>
+
+</nav>
+
+<div onclick="toggleCart()">🛒 <span id="count">0</span></div>
+
+</header>
+
+<div class="container" id="home">
+
+<h2>Giới thiệu</h2>
+<p>Chuyên thảo dược thiên nhiên: Cà Gai Leo - An Xoa - Lá Vằng</p>
+
+</div>
+
+<div class="container" id="products" style="display:none">
+
+<h2>Sản phẩm</h2>
+
+<div class="products">
+
+<div class="product">
+<h3>Cà Gai Leo</h3>
+<p>120000đ</p>
+<button onclick="addCart('Cà Gai Leo',120000)">Thêm</button>
+</div>
+
+<div class="product">
+<h3>An Xoa</h3>
+<p>100000đ</p>
+<button onclick="addCart('An Xoa',100000)">Thêm</button>
+</div>
+
+</div>
+
+</div>
+
+<div class="cart" id="cart">
+
+<h2>Giỏ hàng</h2>
+
+<ul id="items"></ul>
+
+<h3>Tổng: <span id="total">0</span>đ</h3>
+
+<h3>Thông tin</h3>
+
+<input id="name" placeholder="Họ tên">
+<input id="phone" placeholder="SĐT">
+<input id="address" placeholder="Địa chỉ">
+<textarea id="note" placeholder="Ghi chú"></textarea>
+
+<button onclick="sendOrder()">Đặt hàng</button>
+
+</div>
+
+<script>
+
+let cart=[]
+
+function show(id){
+document.getElementById("home").style.display="none"
+document.getElementById("products").style.display="none"
+document.getElementById(id).style.display="block"
+}
+
+function toggleCart(){
+document.getElementById("cart").classList.toggle("open")
+loadCart()
+}
+
+function addCart(name,price){
+cart.push({name,price})
+document.getElementById("count").innerText=cart.length
+}
+
+function loadCart(){
+
+let list=document.getElementById("items")
+list.innerHTML=""
+
+let total=0
+
+cart.forEach(i=>{
+let li=document.createElement("li")
+li.innerText=i.name+" - "+i.price+"đ"
+list.appendChild(li)
+total+=i.price
+})
+
+document.getElementById("total").innerText=total
+
+}
+
+function sendOrder(){
+
+let name=document.getElementById("name").value
+let phone=document.getElementById("phone").value
+let address=document.getElementById("address").value
+
+if(name==""||phone==""||address==""){
+alert("Nhập đủ thông tin")
+return
+}
+
+let token="8623321611:AAGSwvY1up6mS044GGXhtT73uJfZuu_QG0I"
+let chat_id="5727276969"
+
+let text="ĐƠN HÀNG MỚI%0A"
+text+="Tên: "+name+"%0A"
+text+="SĐT: "+phone+"%0A"
+text+="Địa chỉ: "+address+"%0A"
+text+="----------------%0A"
+
+cart.forEach(i=>{
+text+=i.name+" - "+i.price+"đ%0A"
+})
+
+let url=`https://api.telegram.org/bot${token}/sendMessage?chat_id=${chat_id}&text=${text}`
+
+fetch(url)
+
+alert("Đã gửi đơn hàng! Check Telegram nhé!")
+
+cart=[]
+
+location.reload()
+
+}
+
+</script>
+
+</body>
+</html>
