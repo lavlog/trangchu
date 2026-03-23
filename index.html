@@ -1,225 +1,697 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>THẢO DƯỢC LA VLOG</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
 
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: url("https://images.unsplash.com/photo-1501004318641-b39e6451bec6") center/cover fixed;
+    }
 
-<title>THẢO DƯỢC LA VLOG</title>
+    header {
+      background: #2e7d32;
+      color: white;
+      padding: 15px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 10px;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
 
-<style>
+    .logo {
+      font-size: 24px;
+      font-weight: bold;
+    }
 
-body{
-margin:0;
-font-family:Arial;
-background:url("https://images.unsplash.com/photo-1501004318641-b39e6451bec6") center/cover fixed;
-}
+    nav {
+      display: flex;
+      gap: 15px;
+      flex-wrap: wrap;
+    }
 
-header{
-background:#2e7d32;
-color:white;
-padding:15px;
-display:flex;
-justify-content:space-between;
-}
+    nav a {
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
+      cursor: pointer;
+    }
 
-nav a{
-color:white;
-margin:10px;
-cursor:pointer;
-}
+    nav a:hover {
+      text-decoration: underline;
+    }
 
-.container{
-background:rgba(255,255,255,0.9);
-margin:15px;
-padding:20px;
-border-radius:10px;
-}
+    .top-actions {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
 
-.products{
-display:flex;
-gap:15px;
-flex-wrap:wrap;
-}
+    .top-actions button {
+      background: white;
+      color: #2e7d32;
+      border: none;
+      padding: 8px 14px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: bold;
+    }
 
-.product{
-background:white;
-padding:10px;
-width:220px;
-border-radius:8px;
-}
+    .container {
+      background: rgba(255, 255, 255, 0.93);
+      margin: 15px;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+    }
 
-button{
-background:#2e7d32;
-color:white;
-padding:8px;
-border:none;
-cursor:pointer;
-}
+    .hero {
+      text-align: center;
+      padding: 30px 10px;
+    }
 
-.cart{
-position:fixed;
-right:-350px;
-top:0;
-width:320px;
-height:100%;
-background:white;
-padding:20px;
-transition:0.4s;
-overflow:auto;
-}
+    .hero h1 {
+      margin-top: 0;
+      color: #1b5e20;
+    }
 
-.cart.open{right:0}
+    .products {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
 
-input,textarea{
-width:100%;
-margin-top:8px;
-padding:10px;
-}
+    .product {
+      background: white;
+      width: 250px;
+      padding: 15px;
+      border-radius: 12px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+    }
 
-</style>
+    .product h3 {
+      margin-top: 0;
+      color: #1b5e20;
+    }
+
+    .price {
+      font-size: 18px;
+      color: #d84315;
+      font-weight: bold;
+      margin: 10px 0;
+    }
+
+    button {
+      background: #2e7d32;
+      color: white;
+      border: none;
+      padding: 10px 14px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: bold;
+      margin-top: 6px;
+    }
+
+    button:hover {
+      opacity: 0.92;
+    }
+
+    .zalo-btn {
+      background: #0068ff;
+      width: 100%;
+    }
+
+    .cart {
+      position: fixed;
+      top: 0;
+      right: -380px;
+      width: 350px;
+      max-width: 100%;
+      height: 100%;
+      background: white;
+      padding: 20px;
+      overflow-y: auto;
+      transition: right 0.35s ease;
+      z-index: 2000;
+      box-shadow: -4px 0 18px rgba(0,0,0,0.2);
+    }
+
+    .cart.open {
+      right: 0;
+    }
+
+    .overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.35);
+      display: none;
+      z-index: 1500;
+    }
+
+    .overlay.show {
+      display: block;
+    }
+
+    .cart-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .close-btn {
+      background: #c62828;
+    }
+
+    .cart-item {
+      list-style: none;
+      background: #f7f7f7;
+      margin-bottom: 10px;
+      padding: 10px;
+      border-radius: 8px;
+    }
+
+    .cart-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .remove-btn {
+      background: #d32f2f;
+      padding: 7px 10px;
+      font-size: 13px;
+    }
+
+    input, textarea {
+      width: 100%;
+      padding: 10px;
+      margin-top: 8px;
+      margin-bottom: 12px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-size: 14px;
+    }
+
+    .empty-text {
+      color: #777;
+      font-style: italic;
+    }
+
+    .admin-login-box {
+      max-width: 420px;
+      margin: 0 auto;
+      background: white;
+      padding: 18px;
+      border-radius: 12px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+
+    .admin-panel {
+      display: none;
+    }
+
+    .admin-panel.show {
+      display: block;
+    }
+
+    .order-card {
+      background: white;
+      border-left: 6px solid #ff9800;
+      padding: 15px;
+      border-radius: 10px;
+      margin-bottom: 15px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+    }
+
+    .order-card.done {
+      border-left-color: #2e7d32;
+      background: #f3fff3;
+    }
+
+    .status-badge {
+      display: inline-block;
+      padding: 6px 10px;
+      border-radius: 999px;
+      font-size: 13px;
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+
+    .pending {
+      background: #fff3cd;
+      color: #8a6d3b;
+    }
+
+    .done-badge {
+      background: #d4edda;
+      color: #155724;
+    }
+
+    .order-actions {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 10px;
+    }
+
+    .secondary-btn {
+      background: #1565c0;
+    }
+
+    .danger-btn {
+      background: #c62828;
+    }
+
+    .logout-btn {
+      background: #616161;
+    }
+
+    .admin-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .note {
+      font-size: 13px;
+      color: #666;
+      line-height: 1.5;
+    }
+
+    @media (max-width: 768px) {
+      .product {
+        width: 100%;
+      }
+
+      .cart {
+        width: 100%;
+        right: -100%;
+      }
+    }
+  </style>
 </head>
-
 <body>
 
-<header>
+  <div id="overlay" class="overlay" onclick="closeCart()"></div>
 
-<h2>🌿 THẢO DƯỢC LA VLOG</h2>
+  <header>
+    <div class="logo">🌿 THẢO DƯỢC LA VLOG</div>
 
-<nav>
+    <nav>
+      <a onclick="showSection('home')">Trang chủ</a>
+      <a onclick="showSection('products')">Sản phẩm</a>
+      <a onclick="showSection('admin')">Admin</a>
+    </nav>
 
-<a onclick="show('home')">Trang chủ</a>
-<a onclick="show('products')">Sản phẩm</a>
+    <div class="top-actions">
+      <button onclick="showSection('admin')">Quản trị</button>
+      <button onclick="toggleCart()">🛒 <span id="count">0</span></button>
+    </div>
+  </header>
 
-</nav>
+  <div class="container" id="home">
+    <div class="hero">
+      <h1>Chuyên thảo dược thiên nhiên sạch</h1>
+      <p>Cà Gai Leo - An Xoa - Lá Vằng - Trà thảo mộc</p>
+      <p>Khách có thể đặt trực tiếp trên web hoặc đặt nhanh qua Zalo.</p>
+    </div>
+  </div>
 
-<div onclick="toggleCart()">🛒 <span id="count">0</span></div>
+  <div class="container" id="products" style="display:none">
+    <h2>Sản phẩm</h2>
+    <div class="products">
+      <div class="product">
+        <h3>Cà Gai Leo</h3>
+        <p>Thảo dược khô, dễ dùng, tiện pha nước uống.</p>
+        <div class="price">120.000đ</div>
+        <button onclick="addCart('Cà Gai Leo', 120000)">Thêm vào giỏ</button>
+        <button class="zalo-btn" onclick="quickOrderZalo('Cà Gai Leo', 120000)">Đặt nhanh qua Zalo</button>
+      </div>
 
-</header>
+      <div class="product">
+        <h3>An Xoa</h3>
+        <p>Thảo dược thiên nhiên, đóng gói tiện lợi.</p>
+        <div class="price">100.000đ</div>
+        <button onclick="addCart('An Xoa', 100000)">Thêm vào giỏ</button>
+        <button class="zalo-btn" onclick="quickOrderZalo('An Xoa', 100000)">Đặt nhanh qua Zalo</button>
+      </div>
 
-<div class="container" id="home">
+      <div class="product">
+        <h3>Lá Vằng</h3>
+        <p>Hương vị dễ uống, thích hợp dùng hằng ngày.</p>
+        <div class="price">90.000đ</div>
+        <button onclick="addCart('Lá Vằng', 90000)">Thêm vào giỏ</button>
+        <button class="zalo-btn" onclick="quickOrderZalo('Lá Vằng', 90000)">Đặt nhanh qua Zalo</button>
+      </div>
+    </div>
+  </div>
 
-<h2>Giới thiệu</h2>
-<p>Chuyên thảo dược thiên nhiên: Cà Gai Leo - An Xoa - Lá Vằng</p>
+  <div class="container" id="admin" style="display:none">
+    <h2>Khu vực quản trị</h2>
 
-</div>
+    <div id="adminLoginBox" class="admin-login-box">
+      <label>Tên đăng nhập</label>
+      <input id="adminUser" placeholder="Nhập tên đăng nhập">
 
-<div class="container" id="products" style="display:none">
+      <label>Mật khẩu</label>
+      <input type="password" id="adminPassword" placeholder="Nhập mật khẩu">
 
-<h2>Sản phẩm</h2>
+      <button onclick="loginAdmin()">Đăng nhập</button>
 
-<div class="products">
+      <p class="note">
+        Tài khoản admin đã cài sẵn trong mã nguồn.
+      </p>
+    </div>
 
-<div class="product">
-<h3>Cà Gai Leo</h3>
-<p>120000đ</p>
-<button onclick="addCart('Cà Gai Leo',120000)">Thêm</button>
-</div>
+    <div id="adminPanel" class="admin-panel">
+      <div class="admin-header">
+        <h3>Danh sách đơn đặt hàng</h3>
+        <button class="logout-btn" onclick="logoutAdmin()">Đăng xuất</button>
+      </div>
+      <div id="ordersList"></div>
+    </div>
+  </div>
 
-<div class="product">
-<h3>An Xoa</h3>
-<p>100000đ</p>
-<button onclick="addCart('An Xoa',100000)">Thêm</button>
-</div>
+  <div class="cart" id="cart">
+    <div class="cart-top">
+      <h2>Giỏ hàng</h2>
+      <button class="close-btn" onclick="closeCart()">Đóng</button>
+    </div>
 
-</div>
+    <div id="cartEmptyText" class="empty-text">Chưa có sản phẩm nào trong giỏ.</div>
+    <ul id="items" style="padding-left:0;"></ul>
 
-</div>
+    <h3>Tổng: <span id="total">0</span>đ</h3>
 
-<div class="cart" id="cart">
+    <h3>Thông tin đặt hàng</h3>
+    <input id="name" placeholder="Họ tên">
+    <input id="phone" placeholder="Số điện thoại">
+    <input id="address" placeholder="Địa chỉ">
+    <textarea id="note" placeholder="Ghi chú"></textarea>
 
-<h2>Giỏ hàng</h2>
+    <button onclick="saveOrder()">Đặt hàng</button>
+    <button class="zalo-btn" onclick="orderCartViaZalo()">Đặt toàn bộ giỏ hàng qua Zalo</button>
+  </div>
 
-<ul id="items"></ul>
+  <script>
+    let cart = JSON.parse(localStorage.getItem("cart")) || [];
 
-<h3>Tổng: <span id="total">0</span>đ</h3>
+    const ADMIN_USER = "amin";
+    const ADMIN_PASSWORD = "Thanhdang123@";
 
-<h3>Thông tin</h3>
+    const ZALO_PHONE = "84901234567";
+    // Thay bằng số Zalo của bạn. Ví dụ: 84901234567
 
-<input id="name" placeholder="Họ tên">
-<input id="phone" placeholder="SĐT">
-<input id="address" placeholder="Địa chỉ">
-<textarea id="note" placeholder="Ghi chú"></textarea>
+    function formatPrice(number) {
+      return Number(number).toLocaleString("vi-VN");
+    }
 
-<button onclick="sendOrder()">Đặt hàng</button>
+    function showSection(id) {
+      document.getElementById("home").style.display = "none";
+      document.getElementById("products").style.display = "none";
+      document.getElementById("admin").style.display = "none";
 
-</div>
+      document.getElementById(id).style.display = "block";
 
-<script>
+      if (id === "admin") {
+        checkAdminUI();
+        renderOrders();
+      }
+    }
 
-let cart=[]
+    function saveCartToStorage() {
+      localStorage.setItem("cart", JSON.stringify(cart));
+    }
 
-function show(id){
-document.getElementById("home").style.display="none"
-document.getElementById("products").style.display="none"
-document.getElementById(id).style.display="block"
-}
+    function updateCartCount() {
+      document.getElementById("count").innerText = cart.length;
+    }
 
-function toggleCart(){
-document.getElementById("cart").classList.toggle("open")
-loadCart()
-}
+    function toggleCart() {
+      document.getElementById("cart").classList.toggle("open");
+      document.getElementById("overlay").classList.toggle("show");
+      loadCart();
+    }
 
-function addCart(name,price){
-cart.push({name,price})
-document.getElementById("count").innerText=cart.length
-}
+    function closeCart() {
+      document.getElementById("cart").classList.remove("open");
+      document.getElementById("overlay").classList.remove("show");
+    }
 
-function loadCart(){
+    function addCart(name, price) {
+      cart.push({ name, price });
+      saveCartToStorage();
+      updateCartCount();
+      loadCart();
+    }
 
-let list=document.getElementById("items")
-list.innerHTML=""
+    function removeCart(index) {
+      cart.splice(index, 1);
+      saveCartToStorage();
+      updateCartCount();
+      loadCart();
+    }
 
-let total=0
+    function loadCart() {
+      const list = document.getElementById("items");
+      const emptyText = document.getElementById("cartEmptyText");
+      list.innerHTML = "";
 
-cart.forEach(i=>{
-let li=document.createElement("li")
-li.innerText=i.name+" - "+i.price+"đ"
-list.appendChild(li)
-total+=i.price
-})
+      let total = 0;
 
-document.getElementById("total").innerText=total
+      if (cart.length === 0) {
+        emptyText.style.display = "block";
+      } else {
+        emptyText.style.display = "none";
+      }
 
-}
+      cart.forEach((item, index) => {
+        const li = document.createElement("li");
+        li.className = "cart-item";
+        li.innerHTML = `
+          <div class="cart-row">
+            <div>
+              <strong>${item.name}</strong><br>
+              <span>${formatPrice(item.price)}đ</span>
+            </div>
+            <button class="remove-btn" onclick="removeCart(${index})">Xóa</button>
+          </div>
+        `;
+        list.appendChild(li);
+        total += Number(item.price);
+      });
 
-function sendOrder(){
+      document.getElementById("total").innerText = formatPrice(total);
+    }
 
-let name=document.getElementById("name").value
-let phone=document.getElementById("phone").value
-let address=document.getElementById("address").value
+    function getOrders() {
+      return JSON.parse(localStorage.getItem("orders")) || [];
+    }
 
-if(name==""||phone==""||address==""){
-alert("Nhập đủ thông tin")
-return
-}
+    function saveOrders(orders) {
+      localStorage.setItem("orders", JSON.stringify(orders));
+    }
 
-let token="8623321611:AAGSwvY1up6mS044GGXhtT73uJfZuu_QG0I"
-let chat_id="5727276969"
+    function saveOrder() {
+      const name = document.getElementById("name").value.trim();
+      const phone = document.getElementById("phone").value.trim();
+      const address = document.getElementById("address").value.trim();
+      const note = document.getElementById("note").value.trim();
 
-let text="ĐƠN HÀNG MỚI%0A"
-text+="Tên: "+name+"%0A"
-text+="SĐT: "+phone+"%0A"
-text+="Địa chỉ: "+address+"%0A"
-text+="----------------%0A"
+      if (!name || !phone || !address) {
+        alert("Vui lòng nhập đầy đủ họ tên, số điện thoại và địa chỉ.");
+        return;
+      }
 
-cart.forEach(i=>{
-text+=i.name+" - "+i.price+"đ%0A"
-})
+      if (cart.length === 0) {
+        alert("Giỏ hàng đang trống.");
+        return;
+      }
 
-let url=`https://api.telegram.org/bot${token}/sendMessage?chat_id=${chat_id}&text=${text}`
+      let total = 0;
+      cart.forEach(item => total += Number(item.price));
 
-fetch(url)
+      const orders = getOrders();
 
-alert("Đã gửi đơn hàng! Check Telegram nhé!")
+      const newOrder = {
+        id: "DH" + Date.now(),
+        customerName: name,
+        phone: phone,
+        address: address,
+        note: note,
+        items: [...cart],
+        total: total,
+        status: "pending",
+        createdAt: new Date().toLocaleString("vi-VN")
+      };
 
-cart=[]
+      orders.unshift(newOrder);
+      saveOrders(orders);
 
-location.reload()
+      alert("Đặt hàng thành công. Đơn hàng đã được lưu trên web.");
 
-}
+      cart = [];
+      saveCartToStorage();
+      updateCartCount();
+      loadCart();
 
-</script>
+      document.getElementById("name").value = "";
+      document.getElementById("phone").value = "";
+      document.getElementById("address").value = "";
+      document.getElementById("note").value = "";
 
+      renderOrders();
+      closeCart();
+    }
+
+    function quickOrderZalo(productName, price) {
+      const message = `Xin chào, tôi muốn đặt nhanh sản phẩm: ${productName} - ${formatPrice(price)}đ`;
+      const url = `https://zalo.me/${ZALO_PHONE}`;
+      window.open(url, "_blank");
+
+      setTimeout(() => {
+        alert("Đã mở Zalo.\n\nBạn có thể gửi nội dung:\n" + message);
+      }, 300);
+    }
+
+    function orderCartViaZalo() {
+      if (cart.length === 0) {
+        alert("Giỏ hàng đang trống.");
+        return;
+      }
+
+      let total = 0;
+      let message = "Xin chào, tôi muốn đặt các sản phẩm sau:\n";
+
+      cart.forEach(item => {
+        message += `- ${item.name} - ${formatPrice(item.price)}đ\n`;
+        total += Number(item.price);
+      });
+
+      message += `\nTổng: ${formatPrice(total)}đ`;
+
+      const url = `https://zalo.me/${ZALO_PHONE}`;
+      window.open(url, "_blank");
+
+      setTimeout(() => {
+        alert("Đã mở Zalo.\n\nBạn có thể gửi nội dung đơn hàng này:\n" + message);
+      }, 300);
+    }
+
+    function loginAdmin() {
+      const user = document.getElementById("adminUser").value.trim();
+      const pass = document.getElementById("adminPassword").value;
+
+      if (user === ADMIN_USER && pass === ADMIN_PASSWORD) {
+        localStorage.setItem("isAdminLoggedIn", "true");
+        checkAdminUI();
+        renderOrders();
+      } else {
+        alert("Sai tài khoản hoặc mật khẩu.");
+      }
+    }
+
+    function logoutAdmin() {
+      localStorage.removeItem("isAdminLoggedIn");
+      checkAdminUI();
+    }
+
+    function checkAdminUI() {
+      const isLoggedIn = localStorage.getItem("isAdminLoggedIn") === "true";
+      document.getElementById("adminLoginBox").style.display = isLoggedIn ? "none" : "block";
+      document.getElementById("adminPanel").classList.toggle("show", isLoggedIn);
+    }
+
+    function toggleOrderStatus(id) {
+      const orders = getOrders().map(order => {
+        if (order.id === id) {
+          order.status = order.status === "pending" ? "done" : "pending";
+        }
+        return order;
+      });
+
+      saveOrders(orders);
+      renderOrders();
+    }
+
+    function deleteOrder(id) {
+      const confirmDelete = confirm("Bạn có chắc muốn xóa đơn hàng này không?");
+      if (!confirmDelete) return;
+
+      const orders = getOrders().filter(order => order.id !== id);
+      saveOrders(orders);
+      renderOrders();
+    }
+
+    function renderOrders() {
+      const isLoggedIn = localStorage.getItem("isAdminLoggedIn") === "true";
+      const ordersList = document.getElementById("ordersList");
+
+      if (!ordersList) return;
+
+      if (!isLoggedIn) {
+        ordersList.innerHTML = "";
+        return;
+      }
+
+      const orders = getOrders();
+
+      if (orders.length === 0) {
+        ordersList.innerHTML = `<p class="empty-text">Chưa có đơn hàng nào.</p>`;
+        return;
+      }
+
+      ordersList.innerHTML = orders.map(order => {
+        const itemsHtml = order.items.map(item =>
+          `<li>${item.name} - ${formatPrice(item.price)}đ</li>`
+        ).join("");
+
+        const isDone = order.status === "done";
+
+        return `
+          <div class="order-card ${isDone ? "done" : ""}">
+            <div class="status-badge ${isDone ? "done-badge" : "pending"}">
+              ${isDone ? "Đã xử lý" : "Chưa xử lý"}
+            </div>
+
+            <p><strong>Mã đơn:</strong> ${order.id}</p>
+            <p><strong>Khách hàng:</strong> ${order.customerName}</p>
+            <p><strong>SĐT:</strong> ${order.phone}</p>
+            <p><strong>Địa chỉ:</strong> ${order.address}</p>
+            <p><strong>Ghi chú:</strong> ${order.note || "Không có"}</p>
+            <p><strong>Thời gian:</strong> ${order.createdAt}</p>
+            <p><strong>Sản phẩm:</strong></p>
+            <ul>${itemsHtml}</ul>
+            <p><strong>Tổng tiền:</strong> ${formatPrice(order.total)}đ</p>
+
+            <div class="order-actions">
+              <button class="secondary-btn" onclick="toggleOrderStatus('${order.id}')">
+                ${isDone ? "Chuyển về chưa xử lý" : "Đánh dấu đã xử lý"}
+              </button>
+              <button class="danger-btn" onclick="deleteOrder('${order.id}')">Xóa đơn</button>
+            </div>
+          </div>
+        `;
+      }).join("");
+    }
+
+    updateCartCount();
+    loadCart();
+    checkAdminUI();
+  </script>
 </body>
 </html>
