@@ -77,12 +77,38 @@
 
     .hero {
       text-align: center;
-      padding: 30px 10px;
+      padding: 30px 10px 15px;
     }
 
     .hero h1 {
       margin-top: 0;
       color: #1b5e20;
+    }
+
+    .intro-box {
+      margin-top: 20px;
+      line-height: 1.8;
+      font-size: 15px;
+      background: #f8fff8;
+      border: 1px solid #dcedc8;
+      border-left: 6px solid #2e7d32;
+      border-radius: 12px;
+      padding: 20px;
+    }
+
+    .intro-box h2,
+    .intro-box h3 {
+      color: #1b5e20;
+      margin-top: 0;
+    }
+
+    .intro-box ul {
+      padding-left: 22px;
+      margin-top: 8px;
+    }
+
+    .intro-box li {
+      margin-bottom: 8px;
     }
 
     .products {
@@ -301,6 +327,10 @@
         width: 100%;
         right: -100%;
       }
+
+      .intro-box {
+        font-size: 14px;
+      }
     }
   </style>
 </head>
@@ -328,6 +358,70 @@
       <h1>Chuyên thảo dược thiên nhiên sạch</h1>
       <p>Cà Gai Leo - An Xoa - Lá Vằng - Trà thảo mộc</p>
       <p>Khách có thể đặt trực tiếp trên web hoặc đặt nhanh qua Zalo.</p>
+    </div>
+
+    <div class="intro-box">
+      <h2>🌿 THẢO DƯỢC LA VLOG – <b>TINH HOA TỪ THIÊN NHIÊN, CHĂM SÓC SỨC KHỎE MỖI NGÀY</b> 🌿</h2>
+
+      <p>
+        Giữa cuộc sống hiện đại đầy áp lực, cơ thể chúng ta ngày càng cần được chăm sóc một cách
+        <b>tự nhiên và an toàn hơn</b>.
+        Đó cũng chính là lý do <b>Thảo Dược La Vlog</b> ra đời – mang đến những sản phẩm
+        <b>thảo dược sạch – chất lượng – lành tính</b> cho mọi gia đình.
+      </p>
+
+      <p>
+        <b>✨ 100% thảo dược thiên nhiên</b><br>
+        Các sản phẩm tại La Vlog được tuyển chọn từ những loại dược liệu quen thuộc như:
+        <i>cà gai leo, an xoa, lá vằng…</i><br>
+        👉 <b>Nguồn gốc rõ ràng – không hóa chất – không pha trộn</b>
+      </p>
+
+      <p>
+        <b>✨ Chọn lọc kỹ – đảm bảo chất lượng</b><br>
+        Từng nguyên liệu được sàng lọc, phơi sấy và bảo quản cẩn thận, giữ trọn dược tính tự nhiên.<br>
+        👉 <b>Đảm bảo an toàn khi sử dụng lâu dài</b>
+      </p>
+
+      <p><b>✨ Hỗ trợ chăm sóc sức khỏe</b></p>
+      <ul>
+        <li>💚 Giúp thanh lọc cơ thể</li>
+        <li>💚 Hỗ trợ giải độc gan</li>
+        <li>💚 Tăng cường sức đề kháng</li>
+        <li>💚 Phù hợp cho người làm việc nhiều, ăn uống thất thường</li>
+      </ul>
+
+      <p>
+        <b>✨ Tiện lợi – dễ sử dụng mỗi ngày</b><br>
+        Chỉ cần pha trà, sắc uống hoặc sử dụng theo hướng dẫn là bạn đã có ngay một phương pháp
+        chăm sóc sức khỏe đơn giản tại nhà.
+      </p>
+
+      <p style="font-size:16px;">
+        💚 <b>La Vlog không chỉ bán thảo dược – mà mang đến giải pháp sống khỏe từ thiên nhiên</b>
+      </p>
+
+      <p>
+        Chúng tôi tin rằng:<br>
+        👉 <b>Sức khỏe tốt bắt đầu từ những điều đơn giản nhất</b>
+      </p>
+
+      <p><b>📦 Cam kết:</b></p>
+      <ul>
+        <li>✔ Sản phẩm đúng chất lượng</li>
+        <li>✔ Giá hợp lý</li>
+        <li>✔ Tư vấn tận tâm</li>
+      </ul>
+
+      <p>
+        📞 <b>Liên hệ ngay:</b> 0964 307 247<br>
+        💬 <b>Zalo hỗ trợ nhanh chóng</b>
+      </p>
+
+      <h3>
+        🌿 THẢO DƯỢC LA VLOG<br>
+        Sống khỏe tự nhiên – An tâm mỗi ngày 🌿
+      </h3>
     </div>
   </div>
 
@@ -373,7 +467,7 @@
       <button onclick="loginAdmin()">Đăng nhập</button>
 
       <p class="note">
-        chỉ Admin mới đăng nhập được.
+        Chỉ Admin mới đăng nhập được.
       </p>
     </div>
 
@@ -412,9 +506,7 @@
 
     const ADMIN_USER = "admin";
     const ADMIN_PASSWORD = "Thanhdang123@";
-
-    const ZALO_PHONE = "84901234567";
-    // Thay bằng số Zalo của bạn. Ví dụ: 84901234567
+    const ZALO_PHONE = "84964307247";
 
     function formatPrice(number) {
       return Number(number).toLocaleString("vi-VN");
@@ -542,7 +634,7 @@
       orders.unshift(newOrder);
       saveOrders(orders);
 
-      alert("Đặt hàng thành công. Qúy khách vui lòng chú ý điện thoại, sẻ có nhân viên gọi chốt đơn sớm nhất.");
+      alert("Đặt hàng thành công. Quý khách vui lòng chú ý điện thoại, sẽ có nhân viên gọi chốt đơn sớm nhất.");
 
       cart = [];
       saveCartToStorage();
@@ -560,7 +652,7 @@
 
     function quickOrderZalo(productName, price) {
       const message = `Xin chào, tôi muốn đặt nhanh sản phẩm: ${productName} - ${formatPrice(price)}đ`;
-      const url = `https://zalo.me/${0964307247}`;
+      const url = `https://zalo.me/${ZALO_PHONE}`;
       window.open(url, "_blank");
 
       setTimeout(() => {
