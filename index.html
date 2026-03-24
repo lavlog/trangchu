@@ -111,6 +111,18 @@
       margin-bottom: 8px;
     }
 
+    .copyright-center {
+      text-align: center;
+      margin-top: 25px;
+      padding: 16px 10px;
+      font-size: 18px;
+      font-weight: bold;
+      color: #1b5e20;
+      background: #f1fff1;
+      border: 1px solid #c8e6c9;
+      border-radius: 12px;
+    }
+
     .products {
       display: flex;
       flex-wrap: wrap;
@@ -331,6 +343,10 @@
       .intro-box {
         font-size: 14px;
       }
+
+      .copyright-center {
+        font-size: 15px;
+      }
     }
   </style>
 </head>
@@ -414,15 +430,19 @@
       </ul>
 
       <p>
-        📞 <b>Liên hệ ngay:</b> 0949143850<br>
-        💬 <b>Zalo hỗ trợ nhanh chóng</b>
-        📍<b>Đồng Thanh Sơn, Xã Đồng Dương, TP Đà Nẵng<b>
+        📞 <b>Liên hệ ngay:</b> 0379-344-597<br>
+        💬 <b>Zalo hỗ trợ nhanh chóng</b><br>
+        📍 <b>Đồng Thanh Sơn, Xã Đồng Dương, TP Đà Nẵng</b>
       </p>
 
       <h3>
         🌿 THẢO DƯỢC LA VLOG<br>
         Sống khỏe tự nhiên – An tâm mỗi ngày 🌿
       </h3>
+    </div>
+
+    <div class="copyright-center">
+      © Copyright 2026 Thảo Dược La Vlog. All right Reserved.
     </div>
   </div>
 
@@ -653,7 +673,7 @@
 
     function quickOrderZalo(productName, price) {
       const message = `Xin chào, tôi muốn đặt nhanh sản phẩm: ${productName} - ${formatPrice(price)}đ`;
-      const url = `https://zalo.me/${0949143850}`;
+      const url = `https://zalo.me/0949143850`;
       window.open(url, "_blank");
 
       setTimeout(() => {
@@ -677,7 +697,7 @@
 
       message += `\nTổng: ${formatPrice(total)}đ`;
 
-      const url = `https://zalo.me/${0949143850}`;
+      const url = `https://zalo.me/0949143850`;
       window.open(url, "_blank");
 
       setTimeout(() => {
