@@ -55,7 +55,6 @@
       display: flex;
       gap: 10px;
       flex-wrap: wrap;
-      align-items: center;
     }
 
     .top-actions button {
@@ -66,44 +65,6 @@
       border-radius: 8px;
       cursor: pointer;
       font-weight: bold;
-    }
-
-    .social-icons {
-      display: flex;
-      gap: 8px;
-      align-items: center;
-    }
-
-    .social-icons a {
-      width: 40px;
-      height: 40px;
-      border-radius: 50%;
-      background: white;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      text-decoration: none;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
-    }
-
-    .social-icons a:hover {
-      transform: scale(1.08);
-      box-shadow: 0 5px 14px rgba(0,0,0,0.25);
-    }
-
-    .social-icons a svg {
-      width: 20px;
-      height: 20px;
-      display: block;
-    }
-
-    .social-icons .facebook svg {
-      fill: #1877f2;
-    }
-
-    .social-icons .tiktok svg {
-      fill: #111111;
     }
 
     .container {
@@ -271,8 +232,7 @@
       font-size: 13px;
     }
 
-    input,
-    textarea {
+    input, textarea {
       width: 100%;
       padding: 10px;
       margin-top: 8px;
@@ -370,26 +330,6 @@
       line-height: 1.5;
     }
 
-    .zalo-float {
-      position: fixed;
-      right: 20px;
-      bottom: 20px;
-      z-index: 9999;
-      text-decoration: none;
-    }
-
-    .zalo-float img {
-      width: 60px;
-      height: 60px;
-      border-radius: 50%;
-      box-shadow: 0 6px 16px rgba(0,0,0,0.3);
-      transition: transform 0.2s;
-    }
-
-    .zalo-float img:hover {
-      transform: scale(1.1);
-    }
-
     @media (max-width: 768px) {
       .product {
         width: 100%;
@@ -406,16 +346,6 @@
 
       .copyright-center {
         font-size: 15px;
-      }
-
-      .zalo-float {
-        right: 12px;
-        bottom: 12px;
-      }
-
-      .zalo-float img {
-        width: 54px;
-        height: 54px;
       }
     }
   </style>
@@ -434,34 +364,6 @@
     </nav>
 
     <div class="top-actions">
-      <div class="social-icons">
-        <a
-          class="facebook"
-          href="https://www.facebook.com/profile.php?id=61578995674427&sk=about"
-          target="_blank"
-          rel="noopener noreferrer"
-          title="Facebook"
-          aria-label="Facebook"
-        >
-          <svg viewBox="0 0 24 24" aria-hidden="true">
-            <path d="M22 12.07C22 6.49 17.52 2 12 2S2 6.49 2 12.07c0 5.03 3.66 9.19 8.44 9.93v-7.03H7.9v-2.9h2.54V9.85c0-2.52 1.49-3.91 3.78-3.91 1.1 0 2.25.2 2.25.2v2.47h-1.27c-1.25 0-1.64.78-1.64 1.58v1.88h2.8l-.45 2.9h-2.35V22c4.78-.74 8.44-4.9 8.44-9.93z"></path>
-          </svg>
-        </a>
-
-        <a
-          class="tiktok"
-          href="https://www.tiktok.com/@ket.qn97?_r=1&_t=ZS-94yTFug1JSL"
-          target="_blank"
-          rel="noopener noreferrer"
-          title="TikTok"
-          aria-label="TikTok"
-        >
-          <svg viewBox="0 0 24 24" aria-hidden="true">
-            <path d="M16.6 5.82c1.19.86 2.65 1.37 4.18 1.39v3.07a7.27 7.27 0 0 1-4.18-1.31v5.94c0 4.45-3.6 8.05-8.05 8.05A8.05 8.05 0 0 1 .5 14.91c0-4.45 3.6-8.05 8.05-8.05.37 0 .73.03 1.08.08v3.18a4.92 4.92 0 0 0-1.08-.12 4.91 4.91 0 1 0 4.91 4.91V1.04h3.14v.13c0 1.93.96 3.64 2.43 4.65z"></path>
-          </svg>
-        </a>
-      </div>
-
       <button onclick="showSection('admin')">Quản trị</button>
       <button onclick="toggleCart()">🛒 <span id="count">0</span></button>
     </div>
@@ -577,8 +479,8 @@
     <h2>Khu vực quản trị</h2>
 
     <div id="adminLoginBox" class="admin-login-box">
-      <label>Tên đăng nhập</label>
-      <input id="adminUser" placeholder="Nhập tên đăng nhập">
+      <label>Email admin</label>
+      <input id="adminUser" placeholder="Nhập email admin">
 
       <label>Mật khẩu</label>
       <input type="password" id="adminPassword" placeholder="Nhập mật khẩu">
@@ -620,23 +522,29 @@
     <button class="zalo-btn" onclick="orderCartViaZalo()">Đặt toàn bộ giỏ hàng qua Zalo</button>
   </div>
 
-  <a
-    href="https://zalo.me/0949143850"
-    target="_blank"
-    rel="noopener noreferrer"
-    class="zalo-float"
-  >
-    <img
-      src="https://upload.wikimedia.org/wikipedia/commons/9/91/Icon_of_Zalo.svg"
-      alt="Chat Zalo"
-    >
-  </a>
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+    import {
+      getAuth,
+      signInWithEmailAndPassword,
+      signOut,
+      onAuthStateChanged
+    } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
 
-  <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyDYJTKRLoUM18lzvn8USA3l6prKGgm5EYs",
+      authDomain: "thaoduoclavlog.firebaseapp.com",
+      projectId: "thaoduoclavlog",
+      storageBucket: "thaoduoclavlog.firebasestorage.app",
+      messagingSenderId: "57966739924",
+      appId: "1:57966739924:web:5151ff7896a0a1f91d9641",
+      measurementId: "G-MJ6Q7HL156"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+
     let cart = JSON.parse(localStorage.getItem("cart")) || [];
-
-    const ADMIN_USER = "admin";
-    const ADMIN_PASSWORD = "Thanhdang123@";
     const ZALO_PHONE = "84949143850";
 
     function formatPrice(number) {
@@ -651,7 +559,7 @@
       document.getElementById(id).style.display = "block";
 
       if (id === "admin") {
-        checkAdminUI();
+        checkAdminUI(auth.currentUser);
         renderOrders();
       }
     }
@@ -783,11 +691,14 @@
 
     function quickOrderZalo(productName, price) {
       const message = `Xin chào, tôi muốn đặt nhanh sản phẩm: ${productName} - ${formatPrice(price)}đ`;
-      const url = `https://zalo.me/0949143850`;
+      const url = `https://zalo.me/${ZALO_PHONE}`;
       window.open(url, "_blank");
 
       setTimeout(() => {
-        alert("Đã mở Zalo.\n\nBạn có thể gửi nội dung:\n" + message);
+        alert("Đã mở Zalo.
+
+Bạn có thể gửi nội dung:
+" + message);
       }, 300);
     }
 
@@ -798,48 +709,67 @@
       }
 
       let total = 0;
-      let message = "Xin chào, tôi muốn đặt các sản phẩm sau:\n";
+      let message = "Xin chào, tôi muốn đặt các sản phẩm sau:
+";
 
       cart.forEach(item => {
-        message += `- ${item.name} - ${formatPrice(item.price)}đ\n`;
+        message += `- ${item.name} - ${formatPrice(item.price)}đ
+`;
         total += Number(item.price);
       });
 
-      message += `\nTổng: ${formatPrice(total)}đ`;
+      message += `
+Tổng: ${formatPrice(total)}đ`;
 
-      const url = `https://zalo.me/0949143850`;
+      const url = `https://zalo.me/${ZALO_PHONE}`;
       window.open(url, "_blank");
 
       setTimeout(() => {
-        alert("Đã mở Zalo.\n\nBạn có thể gửi nội dung đơn hàng này:\n" + message);
+        alert("Đã mở Zalo.
+
+Bạn có thể gửi nội dung đơn hàng này:
+" + message);
       }, 300);
     }
 
-    function loginAdmin() {
-      const user = document.getElementById("adminUser").value.trim();
+    async function loginAdmin() {
+      const email = document.getElementById("adminUser").value.trim();
       const pass = document.getElementById("adminPassword").value;
 
-      if (user === ADMIN_USER && pass === ADMIN_PASSWORD) {
-        localStorage.setItem("isAdminLoggedIn", "true");
-        checkAdminUI();
-        renderOrders();
-      } else {
-        alert("Sai tài khoản hoặc mật khẩu.");
+      if (!email || !pass) {
+        alert("Vui lòng nhập email và mật khẩu.");
+        return;
+      }
+
+      try {
+        await signInWithEmailAndPassword(auth, email, pass);
+        alert("Đăng nhập thành công.");
+      } catch (error) {
+        alert("Đăng nhập thất bại: " + error.message);
       }
     }
 
-    function logoutAdmin() {
-      localStorage.removeItem("isAdminLoggedIn");
-      checkAdminUI();
+    async function logoutAdmin() {
+      try {
+        await signOut(auth);
+      } catch (error) {
+        alert("Đăng xuất thất bại: " + error.message);
+      }
     }
 
-    function checkAdminUI() {
-      const isLoggedIn = localStorage.getItem("isAdminLoggedIn") === "true";
+    function checkAdminUI(user) {
+      const isLoggedIn = !!user;
       document.getElementById("adminLoginBox").style.display = isLoggedIn ? "none" : "block";
       document.getElementById("adminPanel").classList.toggle("show", isLoggedIn);
     }
 
     function toggleOrderStatus(id) {
+      const user = auth.currentUser;
+      if (!user) {
+        alert("Bạn cần đăng nhập admin.");
+        return;
+      }
+
       const orders = getOrders().map(order => {
         if (order.id === id) {
           order.status = order.status === "pending" ? "done" : "pending";
@@ -852,6 +782,12 @@
     }
 
     function deleteOrder(id) {
+      const user = auth.currentUser;
+      if (!user) {
+        alert("Bạn cần đăng nhập admin.");
+        return;
+      }
+
       const confirmDelete = confirm("Bạn có chắc muốn xóa đơn hàng này không?");
       if (!confirmDelete) return;
 
@@ -861,7 +797,8 @@
     }
 
     function renderOrders() {
-      const isLoggedIn = localStorage.getItem("isAdminLoggedIn") === "true";
+      const user = auth.currentUser;
+      const isLoggedIn = !!user;
       const ordersList = document.getElementById("ordersList");
 
       if (!ordersList) return;
@@ -912,9 +849,34 @@
       }).join("");
     }
 
+    onAuthStateChanged(auth, (user) => {
+      checkAdminUI(user);
+      if (user) {
+        renderOrders();
+      } else {
+        const ordersList = document.getElementById("ordersList");
+        if (ordersList) {
+          ordersList.innerHTML = "";
+        }
+      }
+    });
+
     updateCartCount();
     loadCart();
-    checkAdminUI();
+    checkAdminUI(auth.currentUser);
+
+    window.showSection = showSection;
+    window.toggleCart = toggleCart;
+    window.closeCart = closeCart;
+    window.addCart = addCart;
+    window.removeCart = removeCart;
+    window.saveOrder = saveOrder;
+    window.quickOrderZalo = quickOrderZalo;
+    window.orderCartViaZalo = orderCartViaZalo;
+    window.loginAdmin = loginAdmin;
+    window.logoutAdmin = logoutAdmin;
+    window.toggleOrderStatus = toggleOrderStatus;
+    window.deleteOrder = deleteOrder;
   </script>
 </body>
 </html>
