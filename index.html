@@ -55,7 +55,6 @@
       display: flex;
       gap: 10px;
       flex-wrap: wrap;
-      align-items: center;
     }
 
     .top-actions button {
@@ -66,44 +65,6 @@
       border-radius: 8px;
       cursor: pointer;
       font-weight: bold;
-    }
-
-    .social-links {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .social-link {
-      width: 40px;
-      height: 40px;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      background: white;
-      border-radius: 999px;
-      text-decoration: none;
-      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.12);
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
-    }
-
-    .social-link:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.18);
-    }
-
-    .social-link svg {
-      width: 20px;
-      height: 20px;
-      display: block;
-    }
-
-    .social-link.facebook svg {
-      fill: #1877f2;
-    }
-
-    .social-link.tiktok svg {
-      fill: #111111;
     }
 
     .container {
@@ -369,6 +330,26 @@
       line-height: 1.5;
     }
 
+    .zalo-float {
+      position: fixed;
+      right: 20px;
+      bottom: 20px;
+      z-index: 9999;
+      text-decoration: none;
+    }
+
+    .zalo-float img {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      box-shadow: 0 6px 16px rgba(0,0,0,0.3);
+      transition: transform 0.2s;
+    }
+
+    .zalo-float img:hover {
+      transform: scale(1.1);
+    }
+
     @media (max-width: 768px) {
       .product {
         width: 100%;
@@ -387,8 +368,14 @@
         font-size: 15px;
       }
 
-      .top-actions {
-        justify-content: flex-end;
+      .zalo-float {
+        right: 12px;
+        bottom: 12px;
+      }
+
+      .zalo-float img {
+        width: 54px;
+        height: 54px;
       }
     }
   </style>
@@ -407,34 +394,6 @@
     </nav>
 
     <div class="top-actions">
-      <div class="social-links">
-        <a
-          class="social-link facebook"
-          href="https://www.facebook.com/profile.php?id=61578995674427&sk=about"
-          target="_blank"
-          rel="noopener noreferrer"
-          aria-label="Facebook"
-          title="Facebook"
-        >
-          <svg viewBox="0 0 24 24" aria-hidden="true">
-            <path d="M22 12.07C22 6.49 17.52 2 12 2S2 6.49 2 12.07c0 5.03 3.66 9.19 8.44 9.93v-7.03H7.9v-2.9h2.54V9.85c0-2.52 1.49-3.91 3.78-3.91 1.1 0 2.25.2 2.25.2v2.47h-1.27c-1.25 0-1.64.78-1.64 1.58v1.88h2.8l-.45 2.9h-2.35V22c4.78-.74 8.44-4.9 8.44-9.93z"></path>
-          </svg>
-        </a>
-
-        <a
-          class="social-link tiktok"
-          href="https://www.tiktok.com/@ket.qn97?_r=1&_t=ZS-94yTFug1JSL"
-          target="_blank"
-          rel="noopener noreferrer"
-          aria-label="TikTok"
-          title="TikTok"
-        >
-          <svg viewBox="0 0 24 24" aria-hidden="true">
-            <path d="M16.6 5.82c1.19.86 2.65 1.37 4.18 1.39v3.07a7.27 7.27 0 0 1-4.18-1.31v5.94c0 4.45-3.6 8.05-8.05 8.05A8.05 8.05 0 0 1 .5 14.91c0-4.45 3.6-8.05 8.05-8.05.37 0 .73.03 1.08.08v3.18a4.92 4.92 0 0 0-1.08-.12 4.91 4.91 0 1 0 4.91 4.91V1.04h3.14v.13c0 1.93.96 3.64 2.43 4.65-.8-.87-1.48-1.85-2.43-4z"></path>
-          </svg>
-        </a>
-      </div>
-
       <button onclick="showSection('admin')">Quản trị</button>
       <button onclick="toggleCart()">🛒 <span id="count">0</span></button>
     </div>
@@ -592,6 +551,17 @@
     <button onclick="saveOrder()">Đặt hàng</button>
     <button class="zalo-btn" onclick="orderCartViaZalo()">Đặt toàn bộ giỏ hàng qua Zalo</button>
   </div>
+
+  <a
+    href="https://zalo.me/0949143850"
+    target="_blank"
+    class="zalo-float"
+  >
+    <img
+      src="https://upload.wikimedia.org/wikipedia/commons/9/91/Icon_of_Zalo.svg"
+      alt="Chat Zalo"
+    >
+  </a>
 
   <script>
     let cart = JSON.parse(localStorage.getItem("cart")) || [];
