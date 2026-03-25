@@ -695,10 +695,7 @@
       window.open(url, "_blank");
 
       setTimeout(() => {
-        alert("Đã mở Zalo.
-
-Bạn có thể gửi nội dung:
-" + message);
+        alert("Đã mở Zalo.\n\nBạn có thể gửi nội dung:\n" + message);
       }, 300);
     }
 
@@ -709,26 +706,20 @@ Bạn có thể gửi nội dung:
       }
 
       let total = 0;
-      let message = "Xin chào, tôi muốn đặt các sản phẩm sau:
-";
+      let message = "Xin chào, tôi muốn đặt các sản phẩm sau:\n";
 
       cart.forEach(item => {
-        message += `- ${item.name} - ${formatPrice(item.price)}đ
-`;
+        message += `- ${item.name} - ${formatPrice(item.price)}đ\n`;
         total += Number(item.price);
       });
 
-      message += `
-Tổng: ${formatPrice(total)}đ`;
+      message += `\nTổng: ${formatPrice(total)}đ`;
 
       const url = `https://zalo.me/${ZALO_PHONE}`;
       window.open(url, "_blank");
 
       setTimeout(() => {
-        alert("Đã mở Zalo.
-
-Bạn có thể gửi nội dung đơn hàng này:
-" + message);
+        alert("Đã mở Zalo.\n\nBạn có thể gửi nội dung đơn hàng này:\n" + message);
       }, 300);
     }
 
