@@ -1208,7 +1208,8 @@
 
   <div class="container" id="guide" style="display:none">
     <h2 class="section-title">Hướng dẫn sử dụng</h2>
-   
+    <p class="section-subtitle">Shop tách riêng phần hướng dẫn để khách dễ xem, dễ đọc và chuyên nghiệp hơn. Bên dưới là hướng dẫn chi tiết cho sản phẩm Lá Vằng, đồng thời khách vẫn có thể xem nhanh từ phần sản phẩm.</p>
+
     <div class="guide-grid">
       <div class="guide-card">
         <h3>🌿 Cách nấu</h3>
@@ -1250,7 +1251,7 @@
     </div>
 
     <div class="guide-note">
-      <strong>⚠️ Lưu ý:</strong> Sản phẩm là thảo dược thiên nhiên, không phải là thuốc và không thay thế thuốc chữa bệnh, cách dùng có thể điều chỉnh tùy nhu cầu và cơ địa mỗi người. Nếu cần tư vấn kỹ hơn, khách có thể liên hệ shop qua Zalo hoặc số điện thoại để được hỗ trợ nhanh.
+      <strong>⚠️ Lưu ý:</strong> Sản phẩm là thảo dược thiên nhiên, cách dùng có thể điều chỉnh tùy nhu cầu và cơ địa mỗi người. Nếu cần tư vấn kỹ hơn, khách có thể liên hệ shop qua Zalo hoặc số điện thoại để được hỗ trợ nhanh.
     </div>
   </div>
 
@@ -1904,6 +1905,7 @@
 
     updateCartCount();
     loadCart();
+    initializeAdministrativeAddress();
     checkAdminUI(auth.currentUser);
 
     window.showSection = showSection;
