@@ -216,6 +216,88 @@
       border-radius: 12px;
     }
 
+    .site-footer {
+      margin: 24px 15px 15px;
+      background: linear-gradient(135deg, #0f4d24, #1b5e20 55%, #2e7d32);
+      color: #f4fff4;
+      border-radius: 18px;
+      overflow: hidden;
+      box-shadow: 0 10px 26px rgba(0, 0, 0, 0.18);
+    }
+
+    .footer-top {
+      display: grid;
+      grid-template-columns: 1.2fr 1fr 1fr 1fr;
+      gap: 18px;
+      padding: 28px 24px 20px;
+    }
+
+    .footer-col h3 {
+      margin: 0 0 14px;
+      font-size: 21px;
+      color: #ffffff;
+    }
+
+    .footer-col p,
+    .footer-col li,
+    .footer-col a {
+      font-size: 15px;
+      line-height: 1.7;
+      color: #e9f7ea;
+      text-decoration: none;
+    }
+
+    .footer-col ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .footer-col li {
+      margin-bottom: 8px;
+    }
+
+    .footer-brand-title {
+      font-size: 28px;
+      font-weight: 800;
+      margin-bottom: 10px;
+      color: #fff7dc;
+      letter-spacing: 0.4px;
+    }
+
+    .footer-brand-text {
+      max-width: 360px;
+    }
+
+    .footer-badge-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 14px;
+    }
+
+    .footer-badge {
+      background: rgba(255, 255, 255, 0.12);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      padding: 7px 12px;
+      border-radius: 999px;
+      font-size: 13px;
+      color: #f7fff7;
+    }
+
+    .footer-link:hover {
+      color: #fff7dc;
+    }
+
+    .footer-bottom {
+      border-top: 1px solid rgba(255, 255, 255, 0.15);
+      padding: 14px 24px 18px;
+      text-align: center;
+      font-size: 15px;
+      color: #f3fff3;
+      background: rgba(0, 0, 0, 0.08);
+    }
+
     .trust-section {
       margin-top: 24px;
       padding: 24px;
@@ -1540,5 +1622,53 @@
     window.toggleOrderStatus = toggleOrderStatus;
     window.deleteOrder = deleteOrder;
   </script>
+
+  <footer class="site-footer">
+    <div class="footer-top">
+      <div class="footer-col">
+        <div class="footer-brand-title">THẢO DƯỢC LA VLOG</div>
+        <p class="footer-brand-text">Thảo dược thiên nhiên sạch, tuyển chọn kỹ, đóng gói gọn gàng và hỗ trợ khách hàng tận tâm mỗi ngày.</p>
+        <div class="footer-badge-row">
+          <span class="footer-badge">🌿 Thảo dược thiên nhiên</span>
+          <span class="footer-badge">🚚 Giao hàng toàn quốc</span>
+          <span class="footer-badge">💰 Thanh toán khi nhận hàng</span>
+        </div>
+      </div>
+
+      <div class="footer-col">
+        <h3>Thông tin liên hệ</h3>
+        <ul>
+          <li>📞 Hotline: <a class="footer-link" href="tel:0949143850">0949143850</a></li>
+          <li>💬 Zalo: <a class="footer-link" href="https://zalo.me/0949143850" target="_blank" rel="noopener noreferrer">Chat với shop</a></li>
+          <li>🕒 Hỗ trợ: 08:00 - 21:00 mỗi ngày</li>
+          <li>📍 Đồng Thanh Sơn, Xã Đồng Dương, TP Đà Nẵng</li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h3>Hỗ trợ khách hàng</h3>
+        <ul>
+          <li>🔄 Đổi trả nếu sản phẩm lỗi</li>
+          <li>📦 Đóng gói cẩn thận, giao tận nơi</li>
+          <li>✅ Nhân viên gọi xác nhận trước khi giao</li>
+          <li>🔒 Bảo mật thông tin khách hàng</li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h3>Kết nối với chúng tôi</h3>
+        <ul>
+          <li>📘 <a class="footer-link" href="https://www.facebook.com/profile.php?id=61578995674427&sk=about" target="_blank" rel="noopener noreferrer">Facebook Thảo Dược La Vlog</a></li>
+          <li>🎵 <a class="footer-link" href="https://www.tiktok.com/@ket.qn97?_r=1&_t=ZS-94yTFug1JSL" target="_blank" rel="noopener noreferrer">TikTok Thảo Dược La Vlog</a></li>
+          <li>💚 Tư vấn miễn phí trước khi đặt hàng</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      © Copyright 2026 Thảo Dược La Vlog. All Rights Reserved.
+    </div>
+  </footer>
+
 </body>
 </html>
