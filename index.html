@@ -707,7 +707,7 @@
       font-size: 14px;
     }
 
-    input, textarea {
+    input, textarea, select {
       width: 100%;
       padding: 11px 12px;
       margin-top: 0;
@@ -718,8 +718,21 @@
       background: #fcfffc;
     }
 
+    select {
+      appearance: none;
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      background-image: linear-gradient(45deg, transparent 50%, #2e7d32 50%), linear-gradient(135deg, #2e7d32 50%, transparent 50%);
+      background-position: calc(100% - 18px) calc(50% - 3px), calc(100% - 12px) calc(50% - 3px);
+      background-size: 6px 6px, 6px 6px;
+      background-repeat: no-repeat;
+      padding-right: 34px;
+      cursor: pointer;
+    }
+
     input.input-error,
-    textarea.input-error {
+    textarea.input-error,
+    select.input-error {
       border-color: #d32f2f;
       box-shadow: 0 0 0 3px rgba(211, 47, 47, 0.10);
       background: #fff8f8;
@@ -737,8 +750,36 @@
       display: block;
     }
 
-    textarea {
-      min-height: 92px;
+    .address-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .field-hint {
+      margin-top: 6px;
+      color: #547657;
+      font-size: 12px;
+      line-height: 1.5;
+    }
+
+    .address-loading {
+      display: none;
+      margin-top: 8px;
+      padding: 10px 12px;
+      border-radius: 10px;
+      background: #f5fbf5;
+      border: 1px dashed #bfd7c0;
+      color: #2e7d32;
+      font-size: 13px;
+      line-height: 1.5;
+    }
+
+    .address-loading.show {
+      display: block;
+    }
+
+    textarea {      min-height: 92px;
       resize: vertical;
     }
 
@@ -1167,7 +1208,7 @@
 
   <div class="container" id="guide" style="display:none">
     <h2 class="section-title">Hướng dẫn sử dụng</h2>
-   
+    
     <div class="guide-grid">
       <div class="guide-card">
         <h3>🌿 Cách nấu</h3>
@@ -1209,7 +1250,7 @@
     </div>
 
     <div class="guide-note">
-      <strong>⚠️ Lưu ý:</strong> Sản phẩm là thảo dược thiên nhiên,không phải là thuốc, không thay thế thuốc chữa bệnh, cách dùng có thể điều chỉnh tùy nhu cầu và cơ địa mỗi người. Nếu cần tư vấn kỹ hơn, khách có thể liên hệ shop qua Zalo hoặc số điện thoại để được hỗ trợ nhanh.
+      <strong>⚠️ Lưu ý:</strong> Sản phẩm là thảo dược thiên nhiên, không phải là thuốc và không thay thế thuốc chữa bệnh, cách dùng có thể điều chỉnh tùy nhu cầu và cơ địa mỗi người. Nếu cần tư vấn kỹ hơn, khách có thể liên hệ shop qua Zalo hoặc số điện thoại để được hỗ trợ nhanh.
     </div>
   </div>
 
@@ -1268,8 +1309,24 @@
 
       <h3 class="form-section-title">Thông tin giao hàng</h3>
       <div class="form-group">
-        <label for="address">Địa chỉ nhận hàng</label>
-        <input id="address" placeholder="Nhập địa chỉ nhận hàng chi tiết">
+        <label for="province">Tỉnh / Thành phố</label>
+        <select id="province">
+          <option value="">Đang tải danh sách tỉnh / thành phố...</option>
+        </select>
+        <div class="field-hint">Khách chọn sẵn tỉnh / thành phố để hạn chế nhập sai địa chỉ.</div>
+      </div>
+      <div class="form-group">
+        <label for="ward">Xã / Phường</label>
+        <select id="ward" disabled>
+          <option value="">Vui lòng chọn tỉnh / thành phố trước</option>
+        </select>
+        <div class="field-hint">Danh sách xã / phường sẽ tự đổi theo tỉnh / thành phố đã chọn.</div>
+      </div>
+      <div id="addressLoading" class="address-loading">Đang tải dữ liệu địa chỉ hành chính...</div>
+      <div class="form-group">
+        <label for="addressDetail">Thôn / ấp / tổ / số nhà</label>
+        <input id="addressDetail" placeholder="Ví dụ: thôn 3, ấp 2, tổ 5, số nhà 12...">
+        <div class="field-hint">Khách chỉ cần nhập phần chi tiết nhỏ như thôn, ấp, tổ, số nhà, tên đường...</div>
       </div>
       <div class="form-group">
         <label for="note">Ghi chú thêm</label>
@@ -1451,6 +1508,155 @@
       localStorage.setItem("orders", JSON.stringify(orders));
     }
 
+    const ADDRESS_DATA_SOURCES = {
+      provinces: [
+        "https://cdn.jsdelivr.net/gh/vietmap-company/vietnam_administrative_address@main/admin_new/province.json",
+        "https://cdn.jsdelivr.net/gh/vietmap-company/vietnam_administrative_address@master/admin_new/province.json"
+      ],
+      wards: [
+        "https://cdn.jsdelivr.net/gh/vietmap-company/vietnam_administrative_address@main/admin_new/ward.json",
+        "https://cdn.jsdelivr.net/gh/vietmap-company/vietnam_administrative_address@master/admin_new/ward.json"
+      ]
+    };
+
+    let administrativeData = {
+      provinces: {},
+      wards: {}
+    };
+
+    async function fetchJsonFromSources(urls) {
+      let lastError = null;
+
+      for (const url of urls) {
+        try {
+          const response = await fetch(url, { cache: "no-store" });
+          if (!response.ok) {
+            throw new Error("Không thể tải dữ liệu từ " + url);
+          }
+          return await response.json();
+        } catch (error) {
+          lastError = error;
+        }
+      }
+
+      throw lastError || new Error("Không thể tải dữ liệu địa chỉ hành chính.");
+    }
+
+    function normalizeProvinceList(data) {
+      return Object.entries(data)
+        .map(([code, item]) => ({
+          code: code,
+          name: item.name || item.full_name || item.path || "",
+          type: item.type || item.level || ""
+        }))
+        .filter(item => item.name)
+        .sort((a, b) => a.name.localeCompare(b.name, "vi", { numeric: true }));
+    }
+
+    function normalizeWardList(data, provinceCode) {
+      return Object.entries(data)
+        .map(([code, item]) => ({
+          code: code,
+          parentCode: item.parent_code || item.province_code || item.parentCode || "",
+          name: item.name || item.full_name || item.path || "",
+          type: item.type || item.level || ""
+        }))
+        .filter(item => item.name && item.parentCode === provinceCode)
+        .sort((a, b) => a.name.localeCompare(b.name, "vi", { numeric: true }));
+    }
+
+    function renderProvinceOptions() {
+      const provinceSelect = document.getElementById("province");
+      const provinces = normalizeProvinceList(administrativeData.provinces);
+
+      provinceSelect.innerHTML = '<option value="">Chọn tỉnh / thành phố</option>';
+
+      provinces.forEach(province => {
+        const option = document.createElement("option");
+        option.value = province.code;
+        option.textContent = province.type ? province.type + " " + province.name : province.name;
+        option.dataset.name = province.name;
+        provinceSelect.appendChild(option);
+      });
+    }
+
+    function renderWardOptions(provinceCode) {
+      const wardSelect = document.getElementById("ward");
+      const wards = normalizeWardList(administrativeData.wards, provinceCode);
+
+      wardSelect.innerHTML = '<option value="">Chọn xã / phường</option>';
+
+      wards.forEach(ward => {
+        const option = document.createElement("option");
+        option.value = ward.code;
+        option.textContent = ward.type ? ward.type + " " + ward.name : ward.name;
+        option.dataset.name = ward.name;
+        wardSelect.appendChild(option);
+      });
+
+      wardSelect.disabled = false;
+    }
+
+    async function initializeAdministrativeAddress() {
+      const loadingBox = document.getElementById("addressLoading");
+      const provinceSelect = document.getElementById("province");
+      const wardSelect = document.getElementById("ward");
+
+      if (!loadingBox || !provinceSelect || !wardSelect) {
+        return;
+      }
+
+      loadingBox.classList.add("show");
+
+      try {
+        const [provinces, wards] = await Promise.all([
+          fetchJsonFromSources(ADDRESS_DATA_SOURCES.provinces),
+          fetchJsonFromSources(ADDRESS_DATA_SOURCES.wards)
+        ]);
+
+        administrativeData.provinces = provinces;
+        administrativeData.wards = wards;
+
+        renderProvinceOptions();
+        provinceSelect.disabled = false;
+        wardSelect.innerHTML = '<option value="">Vui lòng chọn tỉnh / thành phố trước</option>';
+      } catch (error) {
+        console.error("Lỗi tải dữ liệu địa chỉ:", error);
+        provinceSelect.innerHTML = '<option value="">Không tải được dữ liệu tỉnh / thành phố</option>';
+        wardSelect.innerHTML = '<option value="">Không tải được dữ liệu xã / phường</option>';
+        provinceSelect.disabled = true;
+        wardSelect.disabled = true;
+        loadingBox.textContent = "Không tải được dữ liệu địa chỉ tự động. Bạn kiểm tra lại kết nối mạng hoặc cập nhật nguồn dữ liệu.";
+      } finally {
+        loadingBox.classList.remove("show");
+      }
+
+      provinceSelect.addEventListener("change", () => {
+        const provinceCode = provinceSelect.value;
+        wardSelect.classList.remove("input-error");
+
+        if (!provinceCode) {
+          wardSelect.innerHTML = '<option value="">Vui lòng chọn tỉnh / thành phố trước</option>';
+          wardSelect.disabled = true;
+          return;
+        }
+
+        renderWardOptions(provinceCode);
+      });
+    }
+
+    function buildFullAddress() {
+      const provinceSelect = document.getElementById("province");
+      const wardSelect = document.getElementById("ward");
+      const detailInput = document.getElementById("addressDetail");
+
+      const detail = detailInput.value.trim();
+      const wardText = wardSelect.options[wardSelect.selectedIndex] ? wardSelect.options[wardSelect.selectedIndex].text : "";
+      const provinceText = provinceSelect.options[provinceSelect.selectedIndex] ? provinceSelect.options[provinceSelect.selectedIndex].text : "";
+
+      return [detail, wardText, provinceText].filter(Boolean).join(", ");
+    }
+
     function validatePhone(phone) {
       return /^(0|84|\+84)(\d{9}|\d{10})$/.test(phone.replace(/\s+/g, ""));
     }
@@ -1465,11 +1671,17 @@
     function saveOrder() {
       const name = document.getElementById("name").value.trim();
       const phone = document.getElementById("phone").value.trim();
-      const address = document.getElementById("address").value.trim();
+      const province = document.getElementById("province").value.trim();
+      const ward = document.getElementById("ward").value.trim();
+      const addressDetail = document.getElementById("addressDetail").value.trim();
+      const address = buildFullAddress();
       const note = document.getElementById("note").value.trim();
 
-      if (!name || !phone || !address) {
-        alert("Vui lòng nhập đầy đủ họ tên, số điện thoại và địa chỉ.");
+      if (!name || !phone || !province || !ward || !addressDetail) {
+        document.getElementById("province").classList.toggle("input-error", !province);
+        document.getElementById("ward").classList.toggle("input-error", !ward);
+        document.getElementById("addressDetail").classList.toggle("input-error", !addressDetail);
+        alert("Vui lòng nhập đầy đủ họ tên, số điện thoại, tỉnh / thành phố, xã / phường và thôn / ấp / số nhà.");
         return;
       }
 
@@ -1480,6 +1692,10 @@
       } else {
         setPhoneError(false);
       }
+
+      document.getElementById("province").classList.remove("input-error");
+      document.getElementById("ward").classList.remove("input-error");
+      document.getElementById("addressDetail").classList.remove("input-error");
 
       if (cart.length === 0) {
         alert("Giỏ hàng đang trống.");
@@ -1516,7 +1732,10 @@
       document.getElementById("name").value = "";
       document.getElementById("phone").value = "";
       setPhoneError(false);
-      document.getElementById("address").value = "";
+      document.getElementById("province").selectedIndex = 0;
+      document.getElementById("ward").innerHTML = '<option value="">Vui lòng chọn tỉnh / thành phố trước</option>';
+      document.getElementById("ward").disabled = true;
+      document.getElementById("addressDetail").value = "";
       document.getElementById("note").value = "";
 
       renderOrders();
