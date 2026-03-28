@@ -97,6 +97,17 @@
       box-shadow: 0 6px 16px rgba(0, 0, 0, 0.16);
     }
 
+    nav a.active {
+      background: linear-gradient(135deg, #fff7dc, #ffe082);
+      color: #1b5e20;
+      border-color: rgba(255, 255, 255, 0.5);
+      box-shadow: 0 10px 22px rgba(0, 0, 0, 0.16);
+    }
+
+    nav a.active .menu-icon {
+      background: rgba(27, 94, 32, 0.12);
+    }
+
     .menu-icon {
       width: 22px;
       height: 22px;
@@ -204,6 +215,76 @@
       margin-bottom: 8px;
     }
 
+    .section-title {
+      margin-top: 0;
+      color: #1b5e20;
+      font-size: 28px;
+    }
+
+    .section-subtitle {
+      color: #4d684f;
+      margin-bottom: 24px;
+      line-height: 1.7;
+    }
+
+    .guide-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 18px;
+      margin-top: 24px;
+    }
+
+    .guide-card {
+      background: linear-gradient(180deg, #ffffff, #f8fff8);
+      border: 1px solid #dcedc8;
+      border-radius: 18px;
+      padding: 20px;
+      box-shadow: 0 10px 24px rgba(27, 94, 32, 0.08);
+    }
+
+    .guide-card h3 {
+      margin-top: 0;
+      color: #1b5e20;
+      font-size: 20px;
+      margin-bottom: 12px;
+    }
+
+    .guide-card p,
+    .guide-card li {
+      color: #446046;
+      line-height: 1.8;
+      font-size: 15px;
+    }
+
+    .guide-card ul {
+      padding-left: 20px;
+      margin: 0;
+    }
+
+    .guide-note {
+      margin-top: 22px;
+      padding: 16px 18px;
+      border-radius: 14px;
+      background: #fff9e8;
+      border: 1px solid #f4df9d;
+      color: #6e5a14;
+      line-height: 1.7;
+    }
+
+    .guide-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: #0d47a1;
+      font-weight: bold;
+      text-decoration: none;
+      margin-top: 6px;
+    }
+
+    .guide-link:hover {
+      text-decoration: underline;
+    }
+
     .site-footer {
       margin: 24px 15px 15px;
       background: linear-gradient(135deg, #0f4d24, #1b5e20 55%, #2e7d32);
@@ -275,6 +356,36 @@
 
     .footer-link:hover {
       color: #fff7dc;
+    }
+
+    .footer-highlight-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 14px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, rgba(255, 247, 220, 0.18), rgba(255, 224, 130, 0.18));
+      border: 1px solid rgba(255, 247, 220, 0.28);
+      font-weight: 700;
+      box-shadow: 0 8px 18px rgba(0, 0, 0, 0.10);
+    }
+
+    .footer-highlight-link.chat-link {
+      color: #fff2b2;
+    }
+
+    .footer-highlight-link.facebook-link {
+      color: #a9d1ff;
+    }
+
+    .footer-highlight-link.tiktok-link {
+      color: #ffccd8;
+    }
+
+    .footer-highlight-link:hover {
+      transform: translateY(-1px);
+      filter: brightness(1.05);
+      color: #ffffff;
     }
 
     .footer-bottom {
@@ -607,6 +718,25 @@
       background: #fcfffc;
     }
 
+    input.input-error,
+    textarea.input-error {
+      border-color: #d32f2f;
+      box-shadow: 0 0 0 3px rgba(211, 47, 47, 0.10);
+      background: #fff8f8;
+    }
+
+    .field-error {
+      display: none;
+      margin-top: 6px;
+      color: #c62828;
+      font-size: 13px;
+      line-height: 1.5;
+    }
+
+    .field-error.show {
+      display: block;
+    }
+
     textarea {
       min-height: 92px;
       resize: vertical;
@@ -851,9 +981,10 @@
     </div>
 
     <nav>
-      <a onclick="showSection('home')"><span class="menu-icon">🏠</span><span>Trang chủ</span></a>
-      <a onclick="showSection('products')"><span class="menu-icon">🌿</span><span>Sản phẩm</span></a>
-      <a onclick="showSection('admin')"><span class="menu-icon">🔐</span><span>Admin</span></a>
+      <a id="nav-home" class="nav-link active" onclick="showSection('home')"><span class="menu-icon">🏠</span><span>Trang chủ</span></a>
+      <a id="nav-products" class="nav-link" onclick="showSection('products')"><span class="menu-icon">🌿</span><span>Sản phẩm</span></a>
+      <a id="nav-guide" class="nav-link" onclick="showSection('guide')"><span class="menu-icon">📖</span><span>Hướng dẫn sử dụng</span></a>
+      <a id="nav-admin" class="nav-link" onclick="showSection('admin')"><span class="menu-icon">🔐</span><span>Admin</span></a>
     </nav>
 
     <div class="top-actions">
@@ -970,6 +1101,7 @@
           <div class="product-actions">
             <button onclick="addCart('Cà Gai Leo', 150000)">Thêm vào giỏ hàng</button>
             <button class="zalo-btn" onclick="quickOrderZalo('Cà Gai Leo', 150000)">Đặt nhanh qua Zalo</button>
+            <a class="guide-link" href="javascript:void(0)" onclick="showSection('guide')">📖 Xem hướng dẫn sử dụng chi tiết</a>
           </div>
           <div class="product-trust">🚚 Giao hàng toàn quốc • 💰 Thanh toán khi nhận hàng • 📞 Hỗ trợ tư vấn miễn phí</div>
         </div>
@@ -997,6 +1129,7 @@
           <div class="product-actions">
             <button onclick="addCart('An Xoa', 120000)">Thêm vào giỏ hàng</button>
             <button class="zalo-btn" onclick="quickOrderZalo('An Xoa', 120000)">Đặt nhanh qua Zalo</button>
+            <a class="guide-link" href="javascript:void(0)" onclick="showSection('guide')">📖 Xem hướng dẫn sử dụng chi tiết</a>
           </div>
           <div class="product-trust">🌿 100% thảo dược thiên nhiên • 🔄 Đổi trả nếu lỗi • 📦 Đóng gói cẩn thận</div>
         </div>
@@ -1024,10 +1157,60 @@
           <div class="product-actions">
             <button onclick="addCart('Lá Vằng', 90000)">Thêm vào giỏ hàng</button>
             <button class="zalo-btn" onclick="quickOrderZalo('Lá Vằng', 90000)">Đặt nhanh qua Zalo</button>
+            <a class="guide-link" href="javascript:void(0)" onclick="showSection('guide')">📖 Xem hướng dẫn sử dụng chi tiết</a>
           </div>
           <div class="product-trust">✅ Chọn lọc kỹ • 📞 Tư vấn miễn phí • 🚚 Giao hàng nhanh toàn quốc</div>
         </div>
       </div>
+    </div>
+  </div>
+
+  <div class="container" id="guide" style="display:none">
+    <h2 class="section-title">Hướng dẫn sử dụng</h2>
+    <p class="section-subtitle">Shop tách riêng phần hướng dẫn để khách dễ xem, dễ đọc và chuyên nghiệp hơn. Bên dưới là hướng dẫn chi tiết cho sản phẩm Lá Vằng, đồng thời khách vẫn có thể xem nhanh từ phần sản phẩm.</p>
+
+    <div class="guide-grid">
+      <div class="guide-card">
+        <h3>🌿 Cách nấu</h3>
+        <ul>
+          <li>Lấy khoảng <strong>20 – 30g lá vằng khô</strong>.</li>
+          <li>Rửa sơ với nước sạch.</li>
+          <li>Đun với <strong>1 – 1.5 lít nước</strong> trong khoảng <strong>10 – 15 phút</strong>.</li>
+          <li>Có thể dùng như nước uống hằng ngày.</li>
+        </ul>
+      </div>
+
+      <div class="guide-card">
+        <h3>⏰ Cách uống</h3>
+        <ul>
+          <li>Uống thay nước lọc trong ngày.</li>
+          <li>Có thể chia làm <strong>2 – 3 lần uống</strong>.</li>
+          <li>Nên uống khi nước còn ấm hoặc để nguội đều được.</li>
+        </ul>
+      </div>
+
+      <div class="guide-card">
+        <h3>🕒 Uống lúc nào tốt?</h3>
+        <ul>
+          <li>Tốt nhất là sau bữa ăn khoảng <strong>20 – 30 phút</strong>.</li>
+          <li>Có thể uống vào buổi sáng và buổi chiều.</li>
+          <li>Hạn chế uống quá khuya.</li>
+        </ul>
+      </div>
+
+      <div class="guide-card">
+        <h3>📦 Bảo quản</h3>
+        <ul>
+          <li>Để nơi khô ráo, thoáng mát.</li>
+          <li>Tránh ánh nắng trực tiếp.</li>
+          <li>Đóng kín túi sau khi sử dụng.</li>
+          <li>Không để ở nơi ẩm mốc.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="guide-note">
+      <strong>⚠️ Lưu ý:</strong> Sản phẩm là thảo dược thiên nhiên, cách dùng có thể điều chỉnh tùy nhu cầu và cơ địa mỗi người. Nếu cần tư vấn kỹ hơn, khách có thể liên hệ shop qua Zalo hoặc số điện thoại để được hỗ trợ nhanh.
     </div>
   </div>
 
@@ -1080,7 +1263,8 @@
       </div>
       <div class="form-group">
         <label for="phone">Số điện thoại</label>
-        <input id="phone" placeholder="Nhập số điện thoại liên hệ">
+        <input id="phone" placeholder="Nhập số điện thoại liên hệ" inputmode="numeric" maxlength="11">
+        <div id="phoneError" class="field-error">Số điện thoại không hợp lệ. Vui lòng nhập 10 hoặc 11 số.</div>
       </div>
 
       <h3 class="form-section-title">Thông tin giao hàng</h3>
@@ -1142,17 +1326,29 @@
       }));
     }
 
+    function setActiveNav(sectionId) {
+      document.querySelectorAll(".nav-link").forEach(link => link.classList.remove("active"));
+      const activeLink = document.getElementById(`nav-${sectionId}`);
+      if (activeLink) {
+        activeLink.classList.add("active");
+      }
+    }
+
     function showSection(id) {
       document.getElementById("home").style.display = "none";
       document.getElementById("products").style.display = "none";
+      document.getElementById("guide").style.display = "none";
       document.getElementById("admin").style.display = "none";
 
       document.getElementById(id).style.display = "block";
+      setActiveNav(id);
 
       if (id === "admin") {
         checkAdminUI(auth.currentUser);
         renderOrders();
       }
+
+      window.scrollTo({ top: 0, behavior: "smooth" });
     }
 
     function saveCartToStorage() {
@@ -1256,6 +1452,17 @@
       localStorage.setItem("orders", JSON.stringify(orders));
     }
 
+    function validatePhone(phone) {
+      return /^(0|84|\+84)(\d{9}|\d{10})$/.test(phone.replace(/\s+/g, ""));
+    }
+
+    function setPhoneError(show) {
+      const phoneInput = document.getElementById("phone");
+      const phoneError = document.getElementById("phoneError");
+      phoneInput.classList.toggle("input-error", show);
+      phoneError.classList.toggle("show", show);
+    }
+
     function saveOrder() {
       const name = document.getElementById("name").value.trim();
       const phone = document.getElementById("phone").value.trim();
@@ -1265,6 +1472,14 @@
       if (!name || !phone || !address) {
         alert("Vui lòng nhập đầy đủ họ tên, số điện thoại và địa chỉ.");
         return;
+      }
+
+      if (!validatePhone(phone)) {
+        setPhoneError(true);
+        alert("Số điện thoại không hợp lệ. Vui lòng nhập đúng định dạng 10 hoặc 11 số.");
+        return;
+      } else {
+        setPhoneError(false);
       }
 
       if (cart.length === 0) {
@@ -1301,6 +1516,7 @@
 
       document.getElementById("name").value = "";
       document.getElementById("phone").value = "";
+      setPhoneError(false);
       document.getElementById("address").value = "";
       document.getElementById("note").value = "";
 
@@ -1471,6 +1687,27 @@
       }).join("");
     }
 
+    const phoneInput = document.getElementById("phone");
+    if (phoneInput) {
+      phoneInput.addEventListener("input", (event) => {
+        event.target.value = event.target.value.replace(/[^0-9+]/g, "");
+        if (event.target.value.length > 0) {
+          setPhoneError(!validatePhone(event.target.value));
+        } else {
+          setPhoneError(false);
+        }
+      });
+
+      phoneInput.addEventListener("blur", (event) => {
+        const value = event.target.value.trim();
+        if (value) {
+          setPhoneError(!validatePhone(value));
+        } else {
+          setPhoneError(false);
+        }
+      });
+    }
+
     onAuthStateChanged(auth, (user) => {
       checkAdminUI(user);
       if (user) {
@@ -1519,7 +1756,7 @@
         <h3>Thông tin liên hệ</h3>
         <ul>
           <li>📞 Hotline: <a class="footer-link" href="tel:0949143850">0949143850</a></li>
-          <li>💬 Zalo: <a class="footer-link" href="https://zalo.me/0949143850" target="_blank" rel="noopener noreferrer">Chat với shop</a></li>
+          <li>💬 Zalo: <a class="footer-link footer-highlight-link chat-link" href="https://zalo.me/0949143850" target="_blank" rel="noopener noreferrer">Chat với shop</a></li>
           <li>🕒 Hỗ trợ: 08:00 - 21:00 mỗi ngày</li>
           <li>📍 Đồng Thanh Sơn, Xã Đồng Dương, TP Đà Nẵng</li>
         </ul>
@@ -1532,14 +1769,15 @@
           <li>📦 Đóng gói cẩn thận, giao tận nơi</li>
           <li>✅ Nhân viên gọi xác nhận trước khi giao</li>
           <li>🔒 Bảo mật thông tin khách hàng</li>
+          <li>📖 <a class="footer-link" href="javascript:void(0)" onclick="showSection('guide')">Xem hướng dẫn sử dụng</a></li>
         </ul>
       </div>
 
       <div class="footer-col">
         <h3>Kết nối với chúng tôi</h3>
         <ul>
-          <li>📘 <a class="footer-link" href="https://www.facebook.com/profile.php?id=61578995674427&sk=about" target="_blank" rel="noopener noreferrer">Facebook Thảo Dược La Vlog</a></li>
-          <li>🎵 <a class="footer-link" href="https://www.tiktok.com/@ket.qn97?_r=1&_t=ZS-94yTFug1JSL" target="_blank" rel="noopener noreferrer">TikTok Thảo Dược La Vlog</a></li>
+          <li>📘 <a class="footer-link footer-highlight-link facebook-link" href="https://www.facebook.com/profile.php?id=61578995674427&sk=about" target="_blank" rel="noopener noreferrer">Facebook Thảo Dược La Vlog</a></li>
+          <li>🎵 <a class="footer-link footer-highlight-link tiktok-link" href="https://www.tiktok.com/@ket.qn97?_r=1&_t=ZS-94yTFug1JSL" target="_blank" rel="noopener noreferrer">TikTok Thảo Dược La Vlog</a></li>
           <li>💚 Tư vấn miễn phí trước khi đặt hàng</li>
         </ul>
       </div>
