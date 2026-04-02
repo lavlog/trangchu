@@ -945,6 +945,180 @@
       line-height: 1.5;
     }
 
+    .floating-zalo {
+      position: fixed;
+      right: 20px;
+      bottom: 20px;
+      width: 68px;
+      height: 68px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #1a7cff, #0057e6);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 16px 34px rgba(0, 104, 255, 0.28);
+      z-index: 5000;
+      transition: transform 0.25s ease, box-shadow 0.25s ease, filter 0.25s ease;
+      text-decoration: none;
+      isolation: isolate;
+      animation: zaloShake 3.2s ease-in-out infinite;
+    }
+
+    .floating-zalo::before {
+      content: "";
+      position: absolute;
+      inset: -8px;
+      border-radius: 50%;
+      background: rgba(0, 104, 255, 0.16);
+      z-index: -2;
+      animation: zaloPulse 2.2s ease-out infinite;
+    }
+
+    .floating-zalo::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: 50%;
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.45);
+      z-index: -1;
+    }
+
+    .floating-zalo:hover {
+      transform: translateY(-4px) scale(1.05);
+      box-shadow: 0 20px 40px rgba(0, 104, 255, 0.34);
+      filter: brightness(1.03);
+      animation-play-state: paused;
+    }
+
+    .floating-zalo img {
+      width: 36px;
+      height: 36px;
+      object-fit: contain;
+      filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.16));
+    }
+
+    .zalo-logo {
+      width: 40px;
+      height: 40px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .zalo-logo svg {
+      width: 100%;
+      height: 100%;
+      display: block;
+      filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.16));
+    }
+
+    .floating-zalo-tooltip {
+      position: absolute;
+      right: 84px;
+      bottom: 6px;
+      min-width: 200px;
+      max-width: 240px;
+      padding: 12px 14px;
+      border-radius: 16px;
+      background: rgba(255, 255, 255, 0.98);
+      color: #11345f;
+      box-shadow: 0 14px 34px rgba(0, 0, 0, 0.16);
+      border: 1px solid rgba(0, 104, 255, 0.14);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      opacity: 0;
+      visibility: hidden;
+      transform: translateX(12px) scale(0.96);
+      transform-origin: right center;
+      transition: opacity 0.25s ease, transform 0.25s ease, visibility 0.25s ease;
+      pointer-events: none;
+      line-height: 1.5;
+    }
+
+    .floating-zalo-tooltip::after {
+      content: "";
+      position: absolute;
+      right: -8px;
+      bottom: 22px;
+      width: 14px;
+      height: 14px;
+      background: rgba(255, 255, 255, 0.98);
+      border-right: 1px solid rgba(0, 104, 255, 0.14);
+      border-bottom: 1px solid rgba(0, 104, 255, 0.14);
+      transform: rotate(-45deg);
+    }
+
+    .floating-zalo:hover .floating-zalo-tooltip,
+    .floating-zalo:focus-visible .floating-zalo-tooltip {
+      opacity: 1;
+      visibility: visible;
+      transform: translateX(0) scale(1);
+    }
+
+    .floating-zalo-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 5px 10px;
+      border-radius: 999px;
+      background: linear-gradient(135deg, #e8f1ff, #f5f9ff);
+      color: #0068ff;
+      font-size: 12px;
+      font-weight: 700;
+      margin-bottom: 7px;
+    }
+
+    .floating-zalo-title {
+      display: block;
+      font-size: 14px;
+      font-weight: 800;
+      color: #0e3668;
+      margin-bottom: 2px;
+    }
+
+    .floating-zalo-desc {
+      display: block;
+      font-size: 12px;
+      color: #4f6785;
+    }
+
+    @keyframes zaloPulse {
+      0% {
+        transform: scale(0.92);
+        opacity: 0.75;
+      }
+      70% {
+        transform: scale(1.18);
+        opacity: 0;
+      }
+      100% {
+        transform: scale(1.18);
+        opacity: 0;
+      }
+    }
+
+    @keyframes zaloShake {
+      0%, 100% {
+        transform: translate3d(0, 0, 0) rotate(0deg);
+      }
+      6% {
+        transform: translate3d(-1px, 0, 0) rotate(-6deg);
+      }
+      12% {
+        transform: translate3d(1px, 0, 0) rotate(6deg);
+      }
+      18% {
+        transform: translate3d(-1px, 0, 0) rotate(-4deg);
+      }
+      24% {
+        transform: translate3d(1px, 0, 0) rotate(4deg);
+      }
+      30% {
+        transform: translate3d(0, 0, 0) rotate(0deg);
+      }
+    }
+
     @media (max-width: 768px) {
       .brand {
         width: 100%;
@@ -996,6 +1170,34 @@
       .footer-top {
         grid-template-columns: 1fr;
       }
+
+      .floating-zalo {
+        right: 14px;
+        bottom: 14px;
+        width: 60px;
+        height: 60px;
+      }
+
+      .floating-zalo img {
+        width: 32px;
+        height: 32px;
+      }
+
+      .floating-zalo-tooltip {
+        min-width: 170px;
+        max-width: 190px;
+        right: 72px;
+        bottom: 0;
+        padding: 10px 12px;
+      }
+
+      .floating-zalo-title {
+        font-size: 13px;
+      }
+
+      .floating-zalo-desc {
+        font-size: 11px;
+      }
     }
   </style>
 </head>
@@ -1025,7 +1227,6 @@
       <a id="nav-home" class="nav-link active" onclick="showSection('home')"><span class="menu-icon">🏠</span><span>Trang chủ</span></a>
       <a id="nav-products" class="nav-link" onclick="showSection('products')"><span class="menu-icon">🌿</span><span>Sản phẩm</span></a>
       <a id="nav-guide" class="nav-link" onclick="showSection('guide')"><span class="menu-icon">📖</span><span>Hướng dẫn sử dụng</span></a>
-      <a id="nav-admin" class="nav-link" onclick="showSection('admin')"><span class="menu-icon">🔐</span><span>Admin</span></a>
     </nav>
 
     <div class="top-actions">
@@ -1344,6 +1545,28 @@
       <button class="zalo-btn" onclick="orderCartViaZalo()">Đặt toàn bộ giỏ hàng qua Zalo</button>
     </div>
   </div>
+
+
+  <a class="floating-zalo" href="https://zalo.me/0949143850" target="_blank" rel="noopener noreferrer" aria-label="Liên hệ Zalo 0949143850">
+    <span class="floating-zalo-tooltip">
+      <span class="floating-zalo-badge">● Zalo hỗ trợ nhanh</span>
+      <span class="floating-zalo-title">Chat ngay qua Zalo</span>
+      <span class="floating-zalo-desc">Tư vấn và đặt hàng: 0949 143 850</span>
+    </span>
+    <span class="zalo-logo" aria-hidden="true">
+      <svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Zalo icon">
+        <defs>
+          <linearGradient id="zaloBg" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%" stop-color="#1da1ff"/>
+            <stop offset="100%" stop-color="#0068ff"/>
+          </linearGradient>
+        </defs>
+        <circle cx="32" cy="32" r="30" fill="url(#zaloBg)"/>
+        <circle cx="32" cy="32" r="24" fill="#ffffff"/>
+        <text x="32" y="37" text-anchor="middle" font-size="16" font-weight="800" font-family="Arial, sans-serif" fill="#0068ff">Zalo</text>
+      </svg>
+    </span>
+  </a>
 
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
